@@ -16,11 +16,6 @@ class ProductInteractor {
 
   init() {}
 
-  func product(at index: Int) -> Product? {
-    guard cart.products.count > index else { return nil }
-    return cart.products[index]
-  }
-
   func remove(_ id: UUID) {
     cart.decreaseProduct(id)
     presenter?.onProductUpdated()

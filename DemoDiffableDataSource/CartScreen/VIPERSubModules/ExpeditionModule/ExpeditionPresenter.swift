@@ -11,17 +11,18 @@ final class ExpeditionPresenter: CartPresenterObserving {
   private let interactor: ExpeditionInteractor
   private let viewModelBuilder: ExpeditionViewModelBuilder
   private let mediator: CartMediator
-  weak var view: ExpeditionView?
-  var isVisible: Bool { true }
+  private weak var view: ExpeditionView?
 
   init(
     interactor: ExpeditionInteractor,
     viewModelBuilder: ExpeditionViewModelBuilder,
-    mediator: CartMediator
+    mediator: CartMediator,
+    view: ExpeditionView
   ) {
     self.interactor = interactor
     self.viewModelBuilder = viewModelBuilder
     self.mediator = mediator
+    self.view = view
   }
 
   func onViewLoaded() {

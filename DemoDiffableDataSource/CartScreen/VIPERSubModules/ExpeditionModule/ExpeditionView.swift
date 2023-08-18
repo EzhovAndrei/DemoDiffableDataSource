@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ExpeditionView: UITableViewCell {
+final class ExpeditionView: UIView {
   private lazy var switchView = {
     let view = UISwitch()
     view.addTarget(self, action: #selector(changeExpedition), for: .valueChanged)
@@ -19,17 +19,11 @@ final class ExpeditionView: UITableViewCell {
     return label
   }()
 
-  var presenter: ExpeditionPresenter? {
-    didSet {
-      presenter?.view = self
-      presenter?.onViewLoaded()
-    }
-  }
+  var presenter: ExpeditionPresenter?
 
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  override init(frame: CGRect) {
+    super.init(frame: frame)
     setupLayout()
-    contentView.backgroundColor = .white
   }
 
   @available(*, unavailable)
@@ -38,16 +32,17 @@ final class ExpeditionView: UITableViewCell {
   }
 
   func setupLayout() {
-    contentView.addSubview(label)
-    contentView.addSubview(switchView)
+    backgroundColor = .white
+    addSubview(label)
+    addSubview(switchView)
     NSLayoutConstraint.useAndActivate([
-      label.heightAnchor.constraint(equalToConstant: 100),
-      label.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor),
-      label.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor),
-      label.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
+      heightAnchor.constraint(equalToConstant: 80),
+      label.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
+      label.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+      label.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
       label.bottomAnchor.constraint(equalTo: switchView.topAnchor),
-      switchView.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor),
-      switchView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor)
+      switchView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
+      switchView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
     ])
   }
 

@@ -37,6 +37,12 @@ class CartDomainModel {
     Product(name: "Pizza", count: 3, imageName: "pizza"),
     Product(name: "Burger", count: 2, imageName: "burger"),
     Product(name: "Coca Cola", count: 3, imageName: "cocacola"),
+    Product(name: "ice cream", count: 2, imageName: "icecream"),
+    Product(name: "Burger", count: 2, imageName: "burger"),
+    Product(name: "Coca Cola", count: 3, imageName: "cocacola"),
+    Product(name: "ice cream", count: 2, imageName: "icecream"),
+    Product(name: "Burger", count: 2, imageName: "burger"),
+    Product(name: "Coca Cola", count: 3, imageName: "cocacola"),
     Product(name: "ice cream", count: 2, imageName: "icecream")
   ]
   static let shared = CartDomainModel()

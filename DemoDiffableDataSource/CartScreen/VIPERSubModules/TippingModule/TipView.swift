@@ -7,22 +7,19 @@
 
 import UIKit
 
-final class TipView: UITableViewCell {
+final class TipView: UIView {
   private lazy var label = {
     let label = UILabel()
     label.text = "Tip"
     return label
   }()
-  var presenter: TipPresenter? {
-    didSet {
-      presenter?.view = self
-    }
-  }
 
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  var presenter: TipPresenter?
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
     setupLayout()
-    contentView.backgroundColor = .white
+    backgroundColor = .white
   }
 
   @available(*, unavailable)
@@ -31,13 +28,10 @@ final class TipView: UITableViewCell {
   }
 
   func setupLayout() {
-    contentView.addSubview(label)
+    addSubview(label)
+    label.pinToSuperview()
     NSLayoutConstraint.useAndActivate([
-      label.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor),
-      label.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor),
-      label.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-      label.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
-      label.heightAnchor.constraint(equalToConstant: 100)
+      heightAnchor.constraint(equalToConstant: 60)
     ])
   }
 }

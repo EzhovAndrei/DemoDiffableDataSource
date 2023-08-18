@@ -10,8 +10,8 @@ import UIKit
 class ProductViewModelBuilder {
   init() {}
 
-  func viewModel(_ product: Product) -> ProductViewModel {
-    ProductViewModel(
+  func viewModel(_ product: Product) -> ProductUIModel {
+    ProductUIModel(
       id: product.id,
       count: "\(product.count)",
       title: product.name,

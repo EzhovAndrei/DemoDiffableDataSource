@@ -11,17 +11,18 @@ final class PaymentPresenter {
   private let interactor: PaymentInteractor
   private let viewModelBuilder: PaymentViewModelBuilder
   private let mediator: CartMediator
-  weak var view: PaymentView?
-  var isVisible: Bool { true }
+  private weak var view: PaymentView?
 
   init(
     interactor: PaymentInteractor,
     viewModelBuilder: PaymentViewModelBuilder,
-    mediator: CartMediator
+    mediator: CartMediator,
+    view: PaymentView
   ) {
     self.interactor = interactor
     self.viewModelBuilder = viewModelBuilder
     self.mediator = mediator
+    self.view = view
   }
 
   func onViewLoaded() {

@@ -8,6 +8,7 @@
 import UIKit
 
 final class ProductCell: UITableViewCell {
+  weak var delegate: ProductPresenter?
   private lazy var buttonDecrease = {
     let button = UIButton()
     button.setTitle("Decrease", for: .normal)
@@ -40,6 +41,7 @@ final class ProductCell: UITableViewCell {
   private lazy var stackViewButtons = {
     let view = UIStackView()
     view.axis = .horizontal
+    view.distribution = .fillEqually
     return view
   }()
 
@@ -48,19 +50,20 @@ final class ProductCell: UITableViewCell {
     label.font = .systemFont(ofSize: 18)
     return label
   }()
+
   private lazy var countLabel = {
     let label = UILabel()
     label.font = .systemFont(ofSize: 20)
     return label
   }()
+
   private lazy var productImageView = {
     let image = UIImageView()
     image.contentMode = .scaleAspectFit
     return image
   }()
 
-  private var viewModel: ProductViewModel?
-  var presenter: ProductPresenter?
+  private var viewModel: ProductUIModel?
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -82,23 +85,23 @@ final class ProductCell: UITableViewCell {
     stackViewProduct.addArrangedSubview(titleLabel)
     stackViewButtons.addArrangedSubview(buttonDecrease)
     stackViewButtons.addArrangedSubview(buttonIncrease)
-    NSLayoutConstraint.useAndActivate([
+
+    NSLayoutConstraint.activate([
       productImageView.heightAnchor.constraint(equalToConstant: 100),
-      productImageView.widthAnchor.constraint(equalToConstant: 100),
-      countLabel.widthAnchor.constraint(equalToConstant: 50),
       stackView.heightAnchor.constraint(equalToConstant: 200),
-      stackView.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor),
-      stackView.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor),
-      stackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-      stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor)
+      productImageView.widthAnchor.constraint(equalToConstant: 100),
+      countLabel.widthAnchor.constraint(equalToConstant: 50)
     ])
+
+    // Pin stackView to superview
+    stackView.pinToSuperview()
+
     startAnimation()
   }
 
   func startAnimation() {
     titleLabel.transform = .identity
     layer.removeAllAnimations()
-    layoutIfNeeded()
     DispatchQueue.main.async {
       UIView.animate(
         withDuration: 5,
@@ -114,7 +117,7 @@ final class ProductCell: UITableViewCell {
     startAnimation()
   }
 
-  func updateView(_ viewModel: ProductViewModel) {
+  func updateView(_ viewModel: ProductUIModel) {
     self.viewModel = viewModel
     titleLabel.text = viewModel.title
     countLabel.text = viewModel.count
@@ -122,10 +125,10 @@ final class ProductCell: UITableViewCell {
   }
 
   @objc func removeProduct() {
-    presenter?.onRemoveTap(viewModel!.id)
+    delegate?.onRemoveTap(viewModel!.id)
   }
 
   @objc func addProduct() {
-    presenter?.onAddTap(viewModel!.id)
+    delegate?.onAddTap(viewModel!.id)
   }
 }

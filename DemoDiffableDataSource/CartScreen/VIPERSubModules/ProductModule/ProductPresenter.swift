@@ -11,7 +11,7 @@ class ProductPresenter {
   private let interactor: ProductInteractor
   private let viewModelBuilder: ProductViewModelBuilder
   private let mediator: CartMediator
-  weak var view: CartViewController?
+  weak var view: ProductView?
 
   init(
     interactor: ProductInteractor,
@@ -23,13 +23,6 @@ class ProductPresenter {
     self.mediator = mediator
   }
 
-  func onProductCellDidLoaded(_ cell: ProductCell, indexPath: IndexPath) {
-    guard let product = interactor.product(at: indexPath.row) else { return }
-    let productViewModel = viewModelBuilder.viewModel(product)
-    cell.updateView(productViewModel)
-    cell.presenter = self
-  }
-
   func onRemoveTap(_ id: UUID) {
     interactor.remove(id)
   }
@@ -38,19 +31,20 @@ class ProductPresenter {
     interactor.add(id)
   }
 
-  func isVisible() -> [UUID] {
-    interactor.products.map { $0.id }
+  func onProductUpdated() {
+    onCartUpdated()
+    mediator.cartWasUpdated(self)
   }
 
-  func onProductUpdated() {
-    mediator.cartWasUpdated(self)
-    view?.refreshProductCells()
+  func onViewDidLoad() {
+    onCartUpdated()
   }
 }
 
 extension ProductPresenter: CartPresenterObserving {
   func onCartUpdated() {
-    view?.refreshProductCells()
+    let uiModels = interactor.products.map { viewModelBuilder.viewModel($0) }
+    view?.applyModels(uiModels)
   }
 }
 

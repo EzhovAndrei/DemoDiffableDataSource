@@ -10,15 +10,16 @@ import Foundation
 final class LocationPresenter {
   private let interactor: LocationInteractor
   private let viewModelBuilder: LocationViewModelBuilder
-  weak var view: LocationView?
-  var isVisible: Bool { true }
+  private weak var view: LocationView?
 
   init(
     interactor: LocationInteractor,
-    viewModelBuilder: LocationViewModelBuilder
+    viewModelBuilder: LocationViewModelBuilder,
+    view: LocationView
   ) {
     self.interactor = interactor
     self.viewModelBuilder = viewModelBuilder
+    self.view = view
   }
 
   func onViewLoaded() {

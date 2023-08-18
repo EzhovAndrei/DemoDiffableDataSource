@@ -10,18 +10,16 @@ import Foundation
 final class TipPresenter {
   private let interactor: TipInteractor
   private let mediator: CartMediator
-  weak var view: TipView?
-  var isVisible: Bool {
-    let domainModel = interactor.domainModel
-    return domainModel.expedition == .delivery && domainModel.payment == .card
-  }
+  private weak var view: TipView?
 
   init(
     interactor: TipInteractor,
-    mediator: CartMediator
+    mediator: CartMediator,
+    view: TipView
   ) {
     self.interactor = interactor
     self.mediator = mediator
+    self.view = view
   }
 }
 

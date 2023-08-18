@@ -7,23 +7,18 @@
 
 import UIKit
 
-final class LocationView: UITableViewCell {
+final class LocationView: UIView {
   private lazy var label = {
     let label = UILabel()
     return label
   }()
 
-  var presenter: LocationPresenter? {
-    didSet {
-      presenter?.view = self
-      presenter?.onViewLoaded()
-    }
-  }
+  var presenter: LocationPresenter?
 
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  override init(frame: CGRect) {
+    super.init(frame: frame)
     setupLayout()
-    contentView.backgroundColor = .white
+    backgroundColor = .white
   }
 
   @available(*, unavailable)
@@ -32,13 +27,13 @@ final class LocationView: UITableViewCell {
   }
 
   func setupLayout() {
-    contentView.addSubview(label)
+    addSubview(label)
     NSLayoutConstraint.useAndActivate([
-      label.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor),
-      label.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor),
-      label.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-      label.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
-      label.heightAnchor.constraint(equalToConstant: 100)
+      label.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
+      label.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+      label.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+      label.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+      heightAnchor.constraint(equalToConstant: 100)
     ])
   }
 

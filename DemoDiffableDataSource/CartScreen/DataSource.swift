@@ -8,17 +8,21 @@
 import UIKit
 
 enum Sections: Hashable {
-  case expedition
-  case location
-  case payment
-  case tip
-  case product
+  case content
 }
 
 enum Cells: Hashable {
-  case expedition
-  case location
-  case payment
-  case tip
-  case product(UUID)
+  case expedition(ExpeditionComponent)
+  case location(LocationComponent)
+  case payment(PaymentComponent)
+  case tip(TipComponent)
+  case product(ProductComponent)
+}
+
+enum ProductSections: Hashable {
+  case product
+}
+
+enum ProductCells: Hashable {
+  case product(ProductUIModel)
 }
